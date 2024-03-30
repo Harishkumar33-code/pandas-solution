@@ -3,6 +3,7 @@ import '../app/globals.css';
 import React, { useState } from 'react';
 import apiClient from '../app/api/index';
 import Navbar from '@/components/Navbar/Navbar';
+import { toast } from 'react-toastify';
 
 const SignIn: React.FC = () => {
   const [showSignInForm, setShowSignInForm] = useState(false);
@@ -20,17 +21,35 @@ const SignIn: React.FC = () => {
     setShowSignUpForm(true); // Show the sign-up form after signing up
   }
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const clickSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const payload = { email: email, password: password };
+    const response = await apiClient().post('user/signIn', payload);
+    if(response.status === 200) {
+      if(response.data === 'User cred are valid') {
+        toast.success('login successfull', { autoClose: 5000 });
+      } else {
+        toast.error('Invalid credentials', { autoClose: 5000 });
+      }
+    } else {
+      toast.error('Invalid request', { autoClose: 5000 });
+    }
+  };
+
+  const clickSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Email:', email);
     console.log('Password:', password);
     const payload = { email: email, password: password };
-    try {
-      const response = await apiClient().post('login', payload);
-      console.log('Response:', response);
-      setShowSignInForm(false);
-    } catch (error) {
-      console.error('Error logging in:', error);
+    const response = await apiClient().post('user/signUp', payload);
+    if(response.status === 200) {
+      if(response.data === 'Email already exists') {
+        toast.error('Email already Exists', { autoClose: 5000 });
+      } else {
+        toast.success('User Created succesfully', { autoClose: 5000 });
+      }
+    } else {
+      toast.error('Invalid request', { autoClose: 5000 });
     }
   };
 
@@ -42,7 +61,7 @@ const SignIn: React.FC = () => {
       {showSignInForm && (
         <div className="flex justify-center items-center h-screen bg-gray-100">
           <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
-            <form onSubmit={handleLogin} className="space-y-4 w-full max-w-md">
+            <form onSubmit={clickSignIn} className="space-y-4 w-full max-w-md">
               <div className="w-full">
                 <label htmlFor="email" className="block">Email:</label>
                 <input
@@ -82,7 +101,7 @@ const SignIn: React.FC = () => {
       {!showSignInForm && showSignUpForm &&(
         <div className="flex justify-center items-center h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
-          <form onSubmit={handleSignUp} className="space-y-4 w-full max-w-md">
+          <form onSubmit={clickSignUp} className="space-y-4 w-full max-w-md">
             <div className="w-full">
               <label htmlFor="email" className="block">Email:</label>
               <input
