@@ -2,10 +2,11 @@
 import React from 'react';
 
 type NavbarProps = {
+    isSignedIn: boolean;
     onSignIn: () => void;
 };
 
-const Navbar: React.FC<NavbarProps> = ({ onSignIn }) => {
+const Navbar: React.FC<NavbarProps> = ({ isSignedIn, onSignIn }) => {
     const handleSignIn = () => {
         onSignIn();
     };

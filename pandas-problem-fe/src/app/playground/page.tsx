@@ -16,7 +16,7 @@ const playground: React.FC<pageProps> = () => {
     <>
       <Topbar />
       <div className='bg-dark-layer-1'>
-          <Finalqlayout></Finalqlayout>
+        <Finalqlayout></Finalqlayout>
       </div>
     </>
   );
