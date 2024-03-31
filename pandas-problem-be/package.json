@@ -1,9 +1,28 @@
 {
+  "name": "pandas-problem-be",
+  "version": "1.0.0",
+  "description": "Description of your application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",                
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",                   
+    "format": "prettier --write .",    
+    "build": "echo \"Add build script for production deployment\"",
+    "deploy": "echo \"Add deploy script for deploying your application\"",
+    "clean": "rm -rf node_modules && npm install"
+  },
+  "author": "Harish Kumar",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.19.1",
     "express-router": "^0.0.1",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
